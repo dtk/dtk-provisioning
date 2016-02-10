@@ -1,0 +1,25 @@
+---
+module: dtk_activemq
+dsl_version: 0.9.1
+module_type: puppet_module
+components: 
+    dtk_activemq: 
+      description: "Activemq server for DTK server"
+      external_ref: 
+        puppet_class: dtk_activemq
+      dependencies: 
+      - dtk
+      - dtk_java
+      attributes: 
+        user: 
+          type: string
+        password: 
+          type: string
+          default: marionette
+        tenant_name: 
+          type: string
+          default: dtk1
+        arbiter_topic:
+          type: string
+        arbiter_queue:
+          type: string
