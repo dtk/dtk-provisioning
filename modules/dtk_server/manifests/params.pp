@@ -23,14 +23,6 @@ class dtk_server::params()
     }
   }
 
-  $non_bundler_gems = {
-    #TODO: because bundler cannot build this; needs compilation
-    'json' => {
-      provider => 'gem',
-      ensure   => '1.5.2',
-      require  => Package['rubygems']
-    }
-  }
   $repo_urls = {
     'server'      => 'https://github.com/dtk/dtk-server',
     'common'      => 'https://github.com/dtk/dtk-common',
