@@ -1,4 +1,4 @@
 ---
 component_modules:
   stdlib:
-    namespace: internal
+    namespace: puppetlabs
