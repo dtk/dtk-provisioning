@@ -4,18 +4,6 @@ class dtk_server::base() inherits dtk_server::params
     ensure => 'installed',
   }
 
-  package { 'rubygems':
-    ensure => 'installed',
-  }
-
-  create_resources(package, $non_bundler_gems)
-
-  package { 'bundler':
-    ensure   => 'installed',
-    provider => 'gem',
-    require  => Package['rubygems']
-  }
-
   file { $config_base:
     ensure   => 'directory',
   }  
