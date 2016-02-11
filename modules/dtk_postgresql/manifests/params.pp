@@ -1,6 +1,6 @@
 class dtk_postgresql::params()
 {
- 	$version = "9.5"
+ 	$version = "8.4"
 
 	case $::osfamily {
 		'RedHat', 'Linux': {
