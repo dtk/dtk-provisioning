@@ -14,7 +14,8 @@ Walkthrough for setting up a DTK Server using provided Puppet modules. For DTK S
 
 ### Bootstraping
 
-For out of the box DTK Server bootstraping, run the following command from your cloned DTK-Provisioning directory
+In `site.pp` file, set the value of host attribute to the public address of your environment,
+and after that run the following command from your cloned DTK-Provisioning directory
 
 `puppet apply site.pp --modulepath=./modules`
 
