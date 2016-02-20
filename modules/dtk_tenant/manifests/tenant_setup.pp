@@ -23,7 +23,7 @@ define dtk_tenant::tenant_setup(
     remote_repo_git_user  => $dtk_tenant::params::remote_repo_git_user,
     activemq_password     => $dtk_tenant::params::activemq_password,
     activemq_user         => $activemq_user,
-    tenant_user           => $tenant_user,
+    tenant_user           => $tenant_name,
     gitolite_user         => $gitolite_user,
     aws_secret_access_key => "",
     remote_repo_host      => "",
@@ -38,7 +38,14 @@ define dtk_tenant::tenant_setup(
     require               => Class["dtk_server::base"],
   } ->
 
-  common_user::common_user_ssh_config{ $tenant_user:
-    user => $tenant_user,
+  common_user::common_user_ssh_config{ $tenant_name:
+    user => $tenant_name,
+  } ->
+
+  dtk_server::add_user { $tenant_name:
+    tenant_db_user => $tenant_user
+
   }
+
+
 }
