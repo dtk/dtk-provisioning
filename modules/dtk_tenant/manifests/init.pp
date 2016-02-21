@@ -18,22 +18,22 @@ define dtk_tenant(
     $gitolite_user_final = $dtk_tenant::params::gitolite_user
   }
 
-  dtk_tenant::activemq_setup { $tenant_name_final:
-    common_user   => $tenant_name_final,
+  dtk_tenant::activemq_setup { $tenant_name:
+    common_user   => $tenant_name,
     gitolite_user => $gitolite_user_final
   } ->
 
-  dtk_tenant::postgresql_setup { $tenant_name_final: } ->
+  dtk_tenant::postgresql_setup { $tenant_name: } ->
 
-  dtk_tenant::tenant_setup { $tenant_name_final:
-    ruby_user      => $tenant_name_final,
-    activemq_user  => $tenant_name_final,
+  dtk_tenant::tenant_setup { $tenant_name:
+    ruby_user      => $tenant_name,
+    activemq_user  => $tenant_name,
     tenant_user    => $tenant_user_final
     gitolite_user  => $gitolite_user_final,
     host           => $host,
   } ->
 
-  dtk_tenant::passenger_setup { $tenant_name_final:
+  dtk_tenant::passenger_setup { $tenant_name:
   }
 
 }

@@ -10,8 +10,8 @@ class dtk_tenant::params()
   $remote_repo_git_user = "git"
   $activemq_password    = "marionette"
   $db_host              = "/var/run/postgresql"
-  $clone_from_git       = false
-  $init_schema          = false
-  $bundler_deployment   = false
-  $seed_salts           = false
+  $clone_from_git       = true
+  $init_schema          = true
+  $bundler_deployment   = true
+  $seed_salts           = true
 }
