@@ -43,7 +43,7 @@ define dtk_tenant::tenant_setup(
   } ->
 
   dtk_server::add_user { $tenant_name:
-    tenant_db_user => $tenant_user
+    tenant_db_user => $tenant_user,
     tenant_user    => $tenant_name,
   }
 

@@ -28,7 +28,7 @@ define dtk_tenant(
   dtk_tenant::tenant_setup { $tenant_name:
     ruby_user      => $tenant_name,
     activemq_user  => $tenant_name,
-    tenant_user    => $tenant_user_final
+    tenant_user    => $tenant_user_final,
     gitolite_user  => $gitolite_user_final,
     host           => $host,
   } ->
