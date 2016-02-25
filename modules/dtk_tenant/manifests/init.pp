@@ -17,6 +17,9 @@ define dtk_tenant(
   if $gitolite_user == 'UNSET' {
     $gitolite_user_final = $dtk_tenant::params::gitolite_user
   }
+  else {
+    $gitolite_user_final = $gitolite_user
+  }
 
   dtk_tenant::activemq_setup { $tenant_name:
     common_user   => $tenant_name,

@@ -38,6 +38,13 @@ define dtk_tenant::tenant_setup(
     require               => Class["dtk_server::base"],
   } ->
 
+  gitolite::admin_client { $tenant_name:
+    client_name => $tenant_name, 
+    gitolite_user => $gitolite_user,
+  } ->
+
+  class {"vcsrepo::include": } ->
+
   common_user::common_user_ssh_config{ $tenant_name:
     user => $tenant_name,
   } ->
@@ -46,6 +53,4 @@ define dtk_tenant::tenant_setup(
     tenant_db_user => $tenant_user,
     tenant_user    => $tenant_name,
   }
-
-
 }

@@ -25,5 +25,9 @@ define dtk_tenant::activemq_setup (
   common_user { $common_user:
     user    => $gitolite_user,
     require => Class["dtk_activemq"]
+  } ->
+  
+  gitolite { $tenant_name:
+    gitolite_user => $gitolite_user
   }
 }
