@@ -121,7 +121,7 @@
         -->
         <transportConnectors>
             <transportConnector name="openwire" uri="tcp://0.0.0.0:6166"/>
-            <transportConnector name="stomp+nio" uri="stomp+nio://0.0.0.0:6163"/>
+            <transportConnector name="stomp+nio" uri="stomp+nio://0.0.0.0:6163?transport.keepAlive=true"/>
             <!-- If using TLS, uncomment this and comment out the previous connector:
               <transportConnector name="stomp+ssl" uri="stomp+ssl://0.0.0.0:61614?needClientAuth=true"/>
             -->
