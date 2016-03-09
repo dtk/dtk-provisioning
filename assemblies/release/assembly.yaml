@@ -141,12 +141,12 @@ workflow:
     - gitolite[tenant]
   - name: psql_and_db_setup
     node: tenant
-    ordered_components: 
+    ordered_components:
     - dtk_postgresql::server
     - dtk_postgresql::db[tenant]
   - name: tenant_setup
     node: tenant
-    ordered_components:    
+    ordered_components:
     - dtk_server::ruby193install[tenant]
     - dtk_server::base
     - redis::install
