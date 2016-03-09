@@ -16,7 +16,7 @@ class dtk::ubuntu()
     path     => ['/usr/bin'],
     unless  => 'test -f /tmp/apt-get-update-run',
     require => Anchor['dtk::ubuntu::begin'],
-    before  => [Anchor['dtk::ubuntu::end'],Stage['main']]
+    before  => Anchor['dtk::ubuntu::end']
   }
 
   exec {' touch for apt-get update dtk::ubuntu':
