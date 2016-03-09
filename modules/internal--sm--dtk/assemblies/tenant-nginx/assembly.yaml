@@ -14,7 +14,7 @@ assembly:
             tenant_user: dtk1
             name: dtk1
       - dtk_server::base
-      - dtk_server::tenant:
+      - dtk_server::tenant[dtk1]:
           attributes:
             gitolite_user: git1
             server_branch: master
