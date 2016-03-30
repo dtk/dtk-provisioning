@@ -134,7 +134,15 @@ define dtk_server::tenant(
       require          => Dtk_server::Tenant::Ssh_config[$app_user],
       before           => [Dtk_server::Bundler_gems_install[$server_gemfile_dir], File["${config_base}/${app_user}/nodes_info.json"]],
       notify           => Exec["passenger_restart_${name}"],
-    } 
+    }
+  }
+
+
+  file { "/var/log/dtk/":
+      ensure => 'directory',
+      owner  => $app_user,
+      group  => $app_user,
+      mode    => '1775',
   }
 
   file { "/var/log/dtk/${app_user}/":
@@ -142,6 +150,7 @@ define dtk_server::tenant(
       owner  => $app_user,
       group  => $app_user,
       mode    => '1775',
+      require => File["/var/log/dtk/"],
     }
 
   $passenger_restart_file = "${app_homedir}/server/current/application/tmp/restart.txt"
