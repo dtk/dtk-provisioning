@@ -1,0 +1,19 @@
+---
+name: single-subnet
+description: Single AWS subnet that is discovered
+dsl_version: 1.0.0
+assembly:
+  components:
+  - image_aws
+  - network_aws::iam_user[default]
+  - network_aws::vpc[vpc1]:
+      attributes:
+        region: us-east-1
+  - network_aws::vpc_subnet[vpc1-public]
+  - network_aws::security_group[vpc1-default]:
+      attributes:
+        group_name: default
+workflows:
+  create:
+    ordered_components:
+    - network_aws::vpc[vpc1]
