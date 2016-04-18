@@ -1,0 +1,146 @@
+---
+module: network_aws
+dsl_version: 1.0.0
+components:
+  iam_user:
+    attributes:
+      name:
+        description: DTK name
+        type: string
+        required: true
+      aws_access_key_id:
+        type: string
+        required: true
+        hidden: true
+      aws_secret_access_key:
+        type: string
+        required: true
+        hidden: true
+      default_keypair:
+        type: string
+        required: true
+    singleton: false
+
+  vpc:
+    attributes:
+      name:
+        description: DTK name
+        type: string
+        required: true
+      vpc_id:
+        description: AWS VPC id
+        type: string
+      region:
+        description: AWS region
+        type: string
+        required: true  
+      cidr_block:
+        type: string 
+        dynamic: true
+      aws_access_key_id:
+        type: string
+        required: true
+        hidden: true
+      aws_secret_access_key:
+        type: string
+        required: true
+        hidden: true
+      default_keypair:
+        type: string
+      images_all_regions:
+        type: hash
+        hidden: true
+      images:
+        type: hash
+        dynamic: true
+        hidden: true
+    singleton: false
+
+    link_defs: 
+      network_aws::iam_user:
+        attribute_mappings:
+        - $aws_access_key_id -> aws_access_key_id
+        - $aws_secret_access_key -> aws_secret_access_key
+        - $default_keypair -> default_keypair
+      image_aws:
+        attribute_mappings:
+        - $images -> images_all_regions
+    actions:
+      create:
+        function:
+          type: ruby_function
+          outputs:
+            images: lambda { |images_all_regions, region| (images_all_regions || {})[region] if region }
+
+  vpc_subnet:
+    attributes:
+      name:
+        description: DTK name
+        type: string
+        required: true
+      subnet_id:
+        description: AWS VPC subnet id
+        type: string
+        required: true
+      tags:
+        description: Tags that are used for matching by subnet references in a service instance
+        type: array
+        hidden: true   
+        default: []
+      vpc_id:
+        type: string
+        dynamic: true
+      cidr_block:
+        type: string
+        dynamic: true
+        note: can be set explicitly or will be dynamically generated if id is set 
+      availability_zone:
+        type: string
+        dynamic: true
+        note: can be set explicitly or will be dynamically generated if id is set 
+      default_keypair:
+        type: string
+        required: true
+        hidden: true
+      images:
+        type: hash
+        dynamic: true
+        hidden: true
+      region:
+        description: AWS region
+        type: string
+        hidden: true
+    singleton: false
+    link_defs:
+      network_aws::vpc:
+        attribute_mappings:
+        - $vpc_id -> vpc_id
+        - $default_keypair -> default_keypair
+        - $images -> images 
+        - $region -> region
+  security_group:
+    attributes:
+      name:
+        description: DTK name
+        type: string
+        required: true
+      group_id:
+        description: AWS security group id
+        type: string
+        dynamic: true
+        note: can be set explicitly or will be dynamically generated if group name set
+      vpc_id:
+        type: string
+        required: true
+      group_name:
+        type: string
+      tags:
+        description: Tags that are used for matching by subnet references in a service instance
+        type: array
+        hidden: true   
+        default: []
+    singleton: false
+    link_defs:
+      network_aws::vpc:
+        attribute_mappings:
+        - $vpc_id -> vpc_id

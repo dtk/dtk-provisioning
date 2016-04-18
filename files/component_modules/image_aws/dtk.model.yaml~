@@ -1,0 +1,124 @@
+---
+module: network_aws
+dsl_version: 1.0.0
+components:
+  iam_user:
+    attributes:
+      name:
+        description: DTK name
+        type: string
+        required: true
+      aws_access_key_id:
+        type: string
+        required: true
+        hidden: true
+      aws_secret_access_key:
+        type: string
+        required: true
+        hidden: true
+      default_keypair:
+        type: string
+        required: true
+    singleton: false
+
+  vpc:
+    attributes:
+      name:
+        description: DTK name
+        type: string
+        required: true
+      id:
+        description: AWS VPC id
+        type: string
+      reqion:
+        description: AWS region
+        type: string
+        required: true  
+      cidr_block:
+        type: string 
+        dynamic: true
+      aws_access_key_id:
+        type: string
+        required: true
+        hidden: true
+      aws_secret_access_key:
+        type: string
+        required: true
+        hidden: true
+      default_keypair:
+        type: string
+        required: true
+    singleton: false
+    link_defs: 
+      network_aws::iam_user:
+        attribute_mappings:
+        - $aws_access_key_id -> aws_access_key_id
+        - $aws_secret_access_key -> aws_secret_access_key
+        - $default_keypair -> default_keypair
+
+  vpc_subnet:
+    attributes:
+      name:
+        description: DTK name
+        type: string
+        required: true
+      id:
+        description: AWS VPC subnet id
+        type: string
+        required: true
+      tags:
+        description: Tags that are used for matching by subnet references in a service instance
+        type: array
+        hidden: true   
+        default: []
+      vpc_id:
+        type: string
+        dynamic: true
+      cidr_block:
+        type: string
+        dynamic: true
+        note: can be set explicitly or will be dynamically generated if id is set 
+      availability_zone:
+        type: string
+        dynamic: true
+        note: can be set explicitly or will be dynamically generated if id is set 
+      default_keypair:
+        type: string
+        required: true
+        hidden: true
+    singleton: false
+    link_defs:
+      network_aws::vpc:
+        attribute_mappings:
+        - $id -> vpc_id
+        - $default_keypair -> default_keypair
+
+  security_group:
+    attributes:
+      name:
+        description: DTK name
+        type: string
+        required: true
+      id:
+        description: AWS security group id
+        type: string
+        dynamic: true
+        note: can be set explicitly or will be dynamically generated if group name set
+      vpc_id:
+        type: string
+        required: true
+      group_name:
+        type: string
+        dynamic: true
+        required: true
+        note: can be set explicitly or will be dynamically generated if id is set 
+      tags:
+        description: Tags that are used for matching by subnet references in a service instance
+        type: array
+        hidden: true   
+        default: []
+    singleton: false
+    link_defs:
+      network_aws::vpc:
+        attribute_mappings:
+        - $id -> vpc_id
