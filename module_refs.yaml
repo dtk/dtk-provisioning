@@ -2,6 +2,8 @@
 component_modules:
   common_user:
     namespace: internal
+  concat:
+    namespace: puppetlabs
   docker:
     namespace: internal
   dtk:
@@ -15,8 +17,6 @@ component_modules:
   dtk_java:
     namespace: internal
   dtk_nginx:
-    namespace: internal
-  dtk_passenger:
     namespace: internal
   dtk_postgresql:
     namespace: internal
@@ -32,6 +32,8 @@ component_modules:
     namespace: internal
   dtk_user:
     namespace: internal
+  ec2:
+    namespace: aws
   gitolite:
     namespace: internal
   logrotate:

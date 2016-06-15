@@ -27,7 +27,7 @@ assembly:
       - dtk_addons::jenkins_swarm_client:
           attributes:
             master: http://jenkins.r8network.com/
-            name: release_node
+            swarm_name: release_node
             user: dtk16-client
             username: admin
       - dtk_addons::test_scripts_setup:
@@ -50,7 +50,6 @@ assembly:
       - dtk_nginx::vhost_for_tenant[dtk16]:
           attributes:
             instance_name: dtk16
-      - nginx::include
       - dtk_activemq:
           attributes:
             user: dtk16
@@ -92,7 +91,6 @@ assembly:
             user: git16
             name: tenant
       - logrotate::base
-      - dtk_passenger
       - redis::install
       - redis::instance:
           attributes:
@@ -155,7 +153,6 @@ workflow:
     - dtk_server::cron_idle_instances[dtk16]
     - gitolite::admin_client[tenant]
     - logrotate::base
-    - dtk_passenger
     - vcsrepo::include
     - common_user::common_user_ssh_config[dtk16]
     - dtk_server::add_user[tenant]
