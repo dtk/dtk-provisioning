@@ -8,7 +8,7 @@ class dtk_client::resources(
     recurse => true,
     owner => "${user}",
     group => "${user}",
-    mode => 0775,
+    mode => "0775",
   }
 
   file {"/home/${user}/dtk/service_modules":
@@ -17,6 +17,6 @@ class dtk_client::resources(
     recurse => true,
     owner => "${user}",
     group => "${user}",
-    mode => 0775,
+    mode => "0775",
   }
 }

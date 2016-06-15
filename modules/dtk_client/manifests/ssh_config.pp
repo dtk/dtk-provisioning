@@ -26,10 +26,17 @@ define dtk_client::ssh_config(
      source => 'puppet:///modules/dtk_client/ssh/id_rsa.pub'
   }
 
+  file { "${repo_target_dir}/.ssh/known_hosts":
+    ensure  => 'present',
+    mode    => '0644',
+    owner   => $app_user,
+  }
+
   exec { "add_privileges_for_known_hosts":
     command => "chown ${app_user}:${app_user} ${repo_target_dir}/.ssh/known_hosts",
     path    => [ "/usr/local/bin/", "/bin/" ],
     environment => ["USER=/root"],
+    require => File["${repo_target_dir}/.ssh/known_hosts"]
   }
 
   file { "${repo_target_dir}/dtk-client":
