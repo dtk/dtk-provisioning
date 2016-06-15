@@ -1,5 +1,5 @@
 class dtk_passenger(
-  $ruby_path = $dtk_passenger::ruby_path
+  $ruby_path = $dtk_passenger::params::ruby_path
   ) inherits dtk_passenger::params
 
 {
