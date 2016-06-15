@@ -108,7 +108,7 @@ components:
            description: "How Jenkins utilize slave - can be normal or exclusive"
            type: string
            default: exclusive
-         name:
+         swarm_name:
            description: "Name of the slave"
            type: string
            required: true

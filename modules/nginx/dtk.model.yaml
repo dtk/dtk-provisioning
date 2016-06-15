@@ -1,8 +1,867 @@
 ---
 module: nginx
-dsl_version: 0.9.1
-module_type: puppet_module
+dsl_version: 1.0.0
 components:
-  include:
-    external_ref:
-      puppet_class: nginx::include
+  resource_vhost:
+    attributes:
+      name:
+        type: string
+        required: true
+      ensure:
+        type: string
+      listen_ip:
+        type: string
+      listen_port:
+        type: string
+      listen_options:
+        type: string
+      listen_unix_socket_enable:
+        type: boolean
+      listen_unix_socket:
+        type: string
+      listen_unix_socket_options:
+        type: string
+      location_allow:
+        type: array
+      location_deny:
+        type: array
+      ipv6_enable:
+        type: boolean
+      ipv6_listen_ip:
+        type: string
+      ipv6_listen_port:
+        type: string
+      ipv6_listen_options:
+        type: string
+      add_header:
+        type: string
+      ssl:
+        type: boolean
+      ssl_listen_option:
+        type: boolean
+      ssl_cert:
+        type: string
+      ssl_client_cert:
+        type: string
+      ssl_dhparam:
+        type: string
+      ssl_key:
+        type: string
+      ssl_port:
+        type: string
+      ssl_protocols:
+        type: string
+      ssl_buffer_size:
+        type: string
+      ssl_ciphers:
+        type: string
+      ssl_cache:
+        type: string
+      ssl_crl:
+        type: string
+      ssl_stapling:
+        type: boolean
+      ssl_stapling_file:
+        type: string
+      ssl_stapling_responder:
+        type: string
+      ssl_stapling_verify:
+        type: boolean
+      ssl_session_timeout:
+        type: string
+      ssl_trusted_cert:
+        type: string
+      spdy:
+        type: string
+      http2:
+        type: string
+      proxy:
+        type: string
+      proxy_redirect:
+        type: string
+      proxy_read_timeout:
+        type: string
+      proxy_connect_timeout:
+        type: string
+      proxy_set_header:
+        type: string
+      proxy_cache:
+        type: boolean
+      proxy_cache_key:
+        type: string
+      proxy_cache_use_stale:
+        type: string
+      proxy_cache_valid:
+        type: boolean
+      proxy_method:
+        type: string
+      proxy_set_body:
+        type: string
+      resolver:
+        type: array
+      fastcgi:
+        type: string
+      fastcgi_params:
+        type: string
+      fastcgi_script:
+        type: string
+      uwsgi:
+        type: string
+      uwsgi_params:
+        type: string
+      index_files:
+        type: array
+      autoindex:
+        type: string
+      server_name:
+        type: array
+      www_root:
+        type: string
+      rewrite_www_to_non_www:
+        type: boolean
+      rewrite_to_https:
+        type: string
+      location_custom_cfg:
+        type: string
+      location_cfg_prepend:
+        type: string
+      location_cfg_append:
+        type: string
+      location_custom_cfg_prepend:
+        type: string
+      location_custom_cfg_append:
+        type: string
+      try_files:
+        type: string
+      auth_basic:
+        type: string
+      auth_basic_user_file:
+        type: string
+      client_body_timeout:
+        type: string
+      client_header_timeout:
+        type: string
+      client_max_body_size:
+        type: string
+      raw_prepend:
+        type: string
+      raw_append:
+        type: string
+      location_raw_prepend:
+        type: string
+      location_raw_append:
+        type: string
+      vhost_cfg_prepend:
+        type: string
+      vhost_cfg_append:
+        type: string
+      vhost_cfg_ssl_prepend:
+        type: string
+      vhost_cfg_ssl_append:
+        type: string
+      include_files:
+        type: string
+      access_log:
+        type: string
+      error_log:
+        type: string
+      format_log:
+        type: string
+      passenger_cgi_param:
+        type: string
+      passenger_set_header:
+        type: string
+      passenger_env_var:
+        type: string
+      log_by_lua:
+        type: string
+      log_by_lua_file:
+        type: string
+      use_default_location:
+        type: boolean
+      rewrite_rules:
+        type: array
+      string_mappings:
+        type: hash
+      geo_mappings:
+        type: hash
+      gzip_types:
+        type: string
+      owner:
+        type: string
+      group:
+        type: string
+      mode:
+        type: string
+      maintenance:
+        type: boolean
+      maintenance_value:
+        type: string
+      locations:
+        type: hash
+    actions:
+      create:
+        puppet_definition: nginx::resource::vhost
+  resource_map:
+    attributes:
+      name:
+        type: string
+        required: true
+      string:
+        type: string
+        required: true
+      mappings:
+        type: string
+        required: true
+      default:
+        type: string
+      ensure:
+        type: string
+      hostnames:
+        type: boolean
+    actions:
+      create:
+        puppet_definition: nginx::resource::map
+  resource_upstream_member:
+    attributes:
+      name:
+        type: string
+        required: true
+      upstream:
+        type: string
+        required: true
+      server:
+        type: string
+        required: true
+      ensure:
+        type: string
+      port:
+        type: string
+      upstream_fail_timeout:
+        type: string
+    actions:
+      create:
+        puppet_definition: nginx::resource::upstream::member
+  resource_location:
+    attributes:
+      name:
+        type: string
+        required: true
+      ensure:
+        type: string
+      internal:
+        type: boolean
+      location:
+        type: string
+      vhost:
+        type: string
+      www_root:
+        type: string
+      autoindex:
+        type: string
+      index_files:
+        type: array
+      proxy:
+        type: string
+      proxy_redirect:
+        type: string
+      proxy_read_timeout:
+        type: string
+      proxy_connect_timeout:
+        type: string
+      proxy_set_header:
+        type: string
+      fastcgi:
+        type: string
+      fastcgi_param:
+        type: string
+      fastcgi_params:
+        type: string
+      fastcgi_script:
+        type: string
+      fastcgi_split_path:
+        type: string
+      uwsgi:
+        type: string
+      uwsgi_params:
+        type: string
+      ssl:
+        type: boolean
+      ssl_only:
+        type: boolean
+      location_alias:
+        type: string
+      location_allow:
+        type: string
+      location_deny:
+        type: string
+      option:
+        type: string
+      stub_status:
+        type: string
+      raw_prepend:
+        type: string
+      raw_append:
+        type: string
+      location_custom_cfg:
+        type: string
+      location_cfg_prepend:
+        type: string
+      location_cfg_append:
+        type: string
+      location_custom_cfg_prepend:
+        type: string
+      location_custom_cfg_append:
+        type: string
+      include:
+        type: string
+      try_files:
+        type: string
+      proxy_cache:
+        type: boolean
+      proxy_cache_key:
+        type: string
+      proxy_cache_use_stale:
+        type: string
+      proxy_cache_valid:
+        type: boolean
+      proxy_method:
+        type: string
+      proxy_set_body:
+        type: string
+      auth_basic:
+        type: string
+      auth_basic_user_file:
+        type: string
+      rewrite_rules:
+        type: array
+      priority:
+        type: string
+      mp4:
+        type: boolean
+      flv:
+        type: boolean
+    actions:
+      create:
+        puppet_definition: nginx::resource::location
+  resource_geo:
+    attributes:
+      name:
+        type: string
+        required: true
+      networks:
+        type: string
+        required: true
+      default:
+        type: string
+      ensure:
+        type: string
+      ranges:
+        type: boolean
+      address:
+        type: string
+      delete:
+        type: string
+      proxies:
+        type: string
+      proxy_recursive:
+        type: string
+    actions:
+      create:
+        puppet_definition: nginx::resource::geo
+  resource_upstream:
+    attributes:
+      name:
+        type: string
+        required: true
+      members:
+        type: string
+      ensure:
+        type: string
+      upstream_cfg_prepend:
+        type: string
+      upstream_fail_timeout:
+        type: string
+      upstream_max_fails:
+        type: string
+      upstream_context:
+        type: string
+    actions:
+      create:
+        puppet_definition: nginx::resource::upstream
+  resource_streamhost:
+    attributes:
+      name:
+        type: string
+        required: true
+      ensure:
+        type: string
+      listen_ip:
+        type: string
+      listen_port:
+        type: string
+      listen_options:
+        type: string
+      ipv6_enable:
+        type: boolean
+      ipv6_listen_ip:
+        type: string
+      ipv6_listen_port:
+        type: string
+      ipv6_listen_options:
+        type: string
+      proxy:
+        type: string
+      proxy_read_timeout:
+        type: string
+      proxy_connect_timeout:
+        type: string
+      resolver:
+        type: array
+      server_name:
+        type: array
+      raw_prepend:
+        type: string
+      raw_append:
+        type: string
+      owner:
+        type: string
+      group:
+        type: string
+      mode:
+        type: string
+    actions:
+      create:
+        puppet_definition: nginx::resource::streamhost
+  resource_mailhost:
+    attributes:
+      name:
+        type: string
+        required: true
+      listen_port:
+        type: string
+        required: true
+      ensure:
+        type: string
+      listen_ip:
+        type: string
+      listen_options:
+        type: string
+      ipv6_enable:
+        type: boolean
+      ipv6_listen_ip:
+        type: string
+      ipv6_listen_port:
+        type: string
+      ipv6_listen_options:
+        type: string
+      ssl:
+        type: boolean
+      ssl_cert:
+        type: string
+      ssl_key:
+        type: string
+      ssl_port:
+        type: string
+      starttls:
+        type: string
+      protocol:
+        type: string
+      auth_http:
+        type: string
+      xclient:
+        type: string
+      server_name:
+        type: array
+    actions:
+      create:
+        puppet_definition: nginx::resource::mailhost
+  nginx:
+    attributes:
+      client_body_buffer_size:
+        type: string
+      client_body_temp_path:
+        type: string
+      client_max_body_size:
+        type: string
+      events_use:
+        type: string
+      fastcgi_cache_inactive:
+        type: string
+      fastcgi_cache_key:
+        type: string
+      fastcgi_cache_keys_zone:
+        type: string
+      fastcgi_cache_levels:
+        type: string
+      fastcgi_cache_max_size:
+        type: string
+      fastcgi_cache_path:
+        type: string
+      fastcgi_cache_use_stale:
+        type: string
+      gzip:
+        type: string
+      http_cfg_append:
+        type: string
+      http_tcp_nodelay:
+        type: string
+      http_tcp_nopush:
+        type: string
+      keepalive_timeout:
+        type: string
+      mail:
+        type: string
+      multi_accept:
+        type: string
+      names_hash_bucket_size:
+        type: string
+      names_hash_max_size:
+        type: string
+      proxy_buffers:
+        type: string
+      proxy_buffer_size:
+        type: string
+      proxy_cache_inactive:
+        type: string
+      proxy_cache_keys_zone:
+        type: string
+      proxy_cache_levels:
+        type: string
+      proxy_cache_max_size:
+        type: string
+      proxy_cache_path:
+        type: string
+      proxy_connect_timeout:
+        type: string
+      proxy_headers_hash_bucket_size:
+        type: string
+      proxy_http_version:
+        type: string
+      proxy_read_timeout:
+        type: string
+      proxy_redirect:
+        type: string
+      proxy_send_timeout:
+        type: string
+      proxy_set_header:
+        type: string
+      sendfile:
+        type: string
+      server_tokens:
+        type: string
+      spdy:
+        type: string
+      types_hash_bucket_size:
+        type: string
+      types_hash_max_size:
+        type: string
+      worker_connections:
+        type: string
+      worker_processes:
+        type: string
+      worker_rlimit_nofile:
+        type: string
+      confd_purge:
+        type: string
+      conf_dir:
+        type: string
+      daemon_user:
+        type: string
+      global_owner:
+        type: string
+      global_group:
+        type: string
+      global_mode:
+        type: string
+      logdir:
+        type: string
+      log_format:
+        type: string
+      http_access_log:
+        type: string
+      nginx_error_log:
+        type: string
+      pid:
+        type: string
+      proxy_temp_path:
+        type: string
+      root_group:
+        type: string
+      run_dir:
+        type: string
+      sites_available_owner:
+        type: string
+      sites_available_group:
+        type: string
+      sites_available_mode:
+        type: string
+      super_user:
+        type: string
+      temp_dir:
+        type: string
+      vhost_purge:
+        type: string
+      conf_template:
+        type: string
+      proxy_conf_template:
+        type: string
+      package_ensure:
+        type: string
+      package_name:
+        type: string
+      package_source:
+        type: string
+      package_flavor:
+        type: string
+      manage_repo:
+        type: string
+      configtest_enable:
+        type: boolean
+      service_ensure:
+        type: string
+      service_flags:
+        type: string
+      service_restart:
+        type: string
+      service_name:
+        type: string
+      geo_mappings:
+        type: hash
+      string_mappings:
+        type: hash
+      nginx_locations:
+        type: hash
+      nginx_mailhosts:
+        type: hash
+      nginx_upstreams:
+        type: hash
+      nginx_vhosts:
+        type: hash
+      nginx_vhosts_defaults:
+        type: hash
+    actions:
+      create:
+        puppet_class: nginx
+  config:
+    attributes:
+      client_body_temp_path:
+        type: string
+      confd_purge:
+        type: boolean
+      conf_dir:
+        type: string
+      daemon_user:
+        type: string
+      global_owner:
+        type: string
+      global_group:
+        type: string
+      global_mode:
+        type: string
+      log_dir:
+        type: string
+      http_access_log:
+        type: string
+      nginx_error_log:
+        type: string
+      nginx_error_log_severity:
+        type: string
+      pid:
+        type: string
+      proxy_temp_path:
+        type: string
+      root_group:
+        type: string
+      run_dir:
+        type: string
+      sites_available_owner:
+        type: string
+      sites_available_group:
+        type: string
+      sites_available_mode:
+        type: string
+      super_user:
+        type: string
+      temp_dir:
+        type: string
+      vhost_purge:
+        type: boolean
+      conf_template:
+        type: string
+      proxy_conf_template:
+        type: string
+      client_body_buffer_size:
+        type: string
+      client_max_body_size:
+        type: string
+      events_use:
+        type: boolean
+      fastcgi_cache_inactive:
+        type: string
+      fastcgi_cache_key:
+        type: boolean
+      fastcgi_cache_keys_zone:
+        type: string
+      fastcgi_cache_levels:
+        type: string
+      fastcgi_cache_max_size:
+        type: string
+      fastcgi_cache_path:
+        type: boolean
+      fastcgi_cache_use_stale:
+        type: boolean
+      gzip:
+        type: string
+      gzip_buffers:
+        type: string
+      gzip_comp_level:
+        type: string
+      gzip_disable:
+        type: string
+      gzip_min_length:
+        type: string
+      gzip_http_version:
+        type: string
+      gzip_proxied:
+        type: string
+      gzip_types:
+        type: string
+      gzip_vary:
+        type: string
+      http_cfg_append:
+        type: boolean
+      http_tcp_nodelay:
+        type: string
+      http_tcp_nopush:
+        type: string
+      keepalive_timeout:
+        type: string
+      log_format:
+        type: hash
+      mail:
+        type: boolean
+      stream:
+        type: boolean
+      multi_accept:
+        type: string
+      names_hash_bucket_size:
+        type: string
+      names_hash_max_size:
+        type: string
+      nginx_cfg_prepend:
+        type: boolean
+      proxy_buffers:
+        type: string
+      proxy_buffer_size:
+        type: string
+      proxy_cache_inactive:
+        type: string
+      proxy_cache_keys_zone:
+        type: string
+      proxy_cache_levels:
+        type: string
+      proxy_cache_max_size:
+        type: string
+      proxy_cache_path:
+        type: boolean
+      proxy_connect_timeout:
+        type: string
+      proxy_headers_hash_bucket_size:
+        type: string
+      proxy_http_version:
+        type: string
+      proxy_read_timeout:
+        type: string
+      proxy_redirect:
+        type: string
+      proxy_send_timeout:
+        type: string
+      proxy_set_header:
+        type: array
+      sendfile:
+        type: string
+      server_tokens:
+        type: string
+      spdy:
+        type: string
+      http2:
+        type: string
+      ssl_stapling:
+        type: string
+      types_hash_bucket_size:
+        type: string
+      types_hash_max_size:
+        type: string
+      worker_connections:
+        type: string
+      worker_processes:
+        type: string
+      worker_rlimit_nofile:
+        type: string
+    actions:
+      create:
+        puppet_class: nginx::config
+  package_debian:
+    attributes:
+      manage_repo:
+        type: boolean
+      package_name:
+        type: string
+      package_source:
+        type: string
+      package_ensure:
+        type: string
+    actions:
+      create:
+        puppet_class: nginx::package::debian
+  package_redhat:
+    attributes:
+      manage_repo:
+        type: boolean
+      package_ensure:
+        type: string
+      package_name:
+        type: string
+      package_source:
+        type: string
+    actions:
+      create:
+        puppet_class: nginx::package::redhat
+  service:
+    attributes:
+      configtest_enable:
+        type: string
+      service_restart:
+        type: string
+      service_ensure:
+        type: string
+      service_name:
+        type: string
+      service_flags:
+        type: string
+    actions:
+      create:
+        puppet_class: nginx::service
+  notice_config:
+    actions:
+      create:
+        puppet_class: nginx::notice::config
+  package:
+    attributes:
+      package_name:
+        type: string
+      package_source:
+        type: string
+      package_ensure:
+        type: string
+      package_flavor:
+        type: string
+      manage_repo:
+        type: string
+    actions:
+      create:
+        puppet_class: nginx::package
+includes:
+- concat
+

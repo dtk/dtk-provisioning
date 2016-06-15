@@ -44,7 +44,6 @@ assembly:
           attributes:
             install: true
             name: dtk1
-      - dtk_passenger
       - dtk_nginx::base
       - dtk_nginx::vhost_for_tenant[dtk1]:
           attributes:
@@ -87,7 +86,6 @@ workflow:
     - common_user::common_user_ssh_config[dtk1]
     - dtk_server::add_user[dtk1]
     - dtk_server::cron_idle_instances[dtk1]
-    - dtk_passenger
     - dtk_nginx::base
     - dtk_nginx::vhost_for_tenant[dtk1]
 

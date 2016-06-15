@@ -1,2 +1,4 @@
 ---
 component_modules:
+  concat:
+    namespace: puppetlabs

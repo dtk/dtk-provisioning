@@ -19,7 +19,7 @@ define dtk_client::install(
     ensure => 'directory',
     owner  => $dtk_client_unix_user,
     group  => $dtk_client_unix_user,
-    mode   => 775
+    mode   => "775"
   }
   
   file { "/home/${dtk_client_unix_user}/dtk/.connection":
@@ -38,7 +38,7 @@ define dtk_client::install(
     ensure => 'directory',
     owner  => $dtk_client_unix_user,
     group  => $dtk_client_unix_user,
-    mode   => 700
+    mode   => "700"
   }
  
   file { "/etc/sudoers.d/${dtk_client_unix_user}":

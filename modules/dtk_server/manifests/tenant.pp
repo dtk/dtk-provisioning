@@ -169,7 +169,7 @@ define dtk_server::tenant(
   # generate an rvm wrapper for thin (and other executable gems)
   # this is required to use an rvm gem in an init script
   dtk_server::rvm_wrapper { $app_user:
-    require => Dtk_server::Bundler_gems_install [ $server_gemfile_dir ],
+    require => Dtk_server::Bundler_gems_install[$server_gemfile_dir],
     creates => '/usr/local/rvm/wrappers/default/thin'
   }
 
@@ -204,7 +204,7 @@ define dtk_server::tenant(
     owner   => $app_user,
     content => template('dtk_server/fog.erb'),
     require => File["${config_base}/${app_user}"],
-    mode   => 600,
+    mode   => "600",
   }
 
   if $init_schema == true {
@@ -357,7 +357,7 @@ define dtk_server::tenant::schema_exec(
     }
   }
   else {
-    $check = inline_template('psql <%=db %> --tuples-only -U postgres ${hostname_argument} --command "<%= sql_test %>" | grep t')
+    $check = inline_template('psql <%= @db %> --tuples-only -U postgres ${hostname_argument} --command "<%= @sql_test %>" | grep t')
     exec { "/usr/local/rvm/wrappers/default/bundle exec ${app_homedir}/server/current/application/utility/${utility_cmd}":
       cwd       => "${app_homedir}/server/current/application",
       logoutput => true,

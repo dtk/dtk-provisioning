@@ -13,38 +13,63 @@
 # Sample Usage:
 #
 # This class file is not called directly
-class nginx::package::debian {
-  $operatingsystem_lowercase = inline_template('<%= @operatingsystem.downcase %>')
+class nginx::package::debian(
+    $manage_repo    = true,
+    $package_name   = 'nginx',
+    $package_source = 'nginx',
+    $package_ensure = 'present'
+  ) {
+
+  $distro = downcase($::operatingsystem)
 
   package { 'nginx':
-    ensure  => present,
-    require => Anchor['nginx::apt_repo'],
+    ensure => $package_ensure,
+    name   => $package_name,
   }
 
-  anchor { 'nginx::apt_repo' : }
+  if $manage_repo {
+    include '::apt'
+    Exec['apt_update'] -> Package['nginx']
 
-  file { '/etc/apt/sources.list.d/nginx.list':
-    ensure  => present,
-    content => "deb http://nginx.org/packages/${operatingsystem_lowercase}/ ${::lsbdistcodename} nginx
-                deb-src http://nginx.org/packages/${operatingsystem_lowercase}/ ${::lsbdistcodename} nginx
-               ",
-    mode    => '0444',
-    require => Exec['add_nginx_apt_key'],
-    before  => Anchor['nginx::apt_repo'],
-  }
+    case $package_source {
+      'nginx', 'nginx-stable': {
+        apt::source { 'nginx':
+          location => "http://nginx.org/packages/${distro}",
+          repos    => 'nginx',
+          key      => '573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62',
+        }
+      }
+      'nginx-mainline': {
+        apt::source { 'nginx':
+          location => "http://nginx.org/packages/mainline/${distro}",
+          repos    => 'nginx',
+          key      => '573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62',
+        }
+      }
+      'passenger': {
+        apt::source { 'nginx':
+          location => 'https://oss-binaries.phusionpassenger.com/apt/passenger',
+          repos    => 'main',
+          key      => '16378A33A6EF16762922526E561F9B9CAC40B2F7',
+        }
 
-  exec { 'add_nginx_apt_key':
-    command   => '/usr/bin/wget http://nginx.org/keys/nginx_signing.key -O - | /usr/bin/apt-key add -',
-    unless    => '/usr/bin/apt-key list | /bin/grep -q nginx',
-    before    => Anchor['nginx::apt_repo'],
-  }
+        package { ['apt-transport-https', 'ca-certificates']:
+          ensure => 'present',
+          before => Apt::Source['nginx'],
+        }
 
-  exec { 'apt_get_update_for_nginx':
-    command     => '/usr/bin/apt-get update',
-    timeout     => 240,
-    returns     => [ 0, 100 ],
-    refreshonly => true,
-    subscribe   => File['/etc/apt/sources.list.d/nginx.list'],
-    before      => Anchor['nginx::apt_repo'],
+        package { 'passenger':
+          ensure  => 'present',
+          require => Exec['apt_update'],
+        }
+
+        if $package_name != 'nginx-extras' {
+          warning('You must set $package_name to "nginx-extras" to enable Passenger')
+        }
+      }
+      default: {
+        fail("\$package_source must be 'nginx-stable', 'nginx-mainline' or 'passenger'. It was set to '${package_source}'")
+      }
+    }
   }
 }
