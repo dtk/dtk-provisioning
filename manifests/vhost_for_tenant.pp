@@ -5,17 +5,37 @@ define dtk_nginx::vhost_for_tenant(
   $docker_socket = undef,
 )
 {
+  include dtk_nginx::install
+  
   if ! defined(Class['nginx::config']) {
     class { 'nginx::config':}
   }
-
   $dtk_tenant_name = $name
   $dtk_tenant_www_root = "/home/${dtk_tenant_name}/server/current/application/public"
 
   #nginx::resource::upstream { $dtk_tenant_name:
   #  members => ["unix:/home/${dtk_tenant_name}/thin/thin.sock"]
   #}
-  
+
+  file { '/etc/nginx/ssl':
+    ensure => directory,
+    mode   => '0600',
+  }
+
+  file { '/etc/nginx/ssl/dtk.io.crt':
+    ensure => present,
+    source => "puppet:///modules/dtk_secret/dtk.io_combined.crt",
+    mode => '0700',
+    require => File['/etc/nginx/ssl'],
+  }
+
+  file { '/etc/nginx/ssl/dtk.io.key':
+    ensure => present,
+    source => "puppet:///modules/dtk_secret/wildcard.dtk.io.key",
+    mode => '0700',
+    require => File['/etc/nginx/ssl'],
+  }
+    
   case $tenant_type {
     'https': {
       nginx::resource::vhost { "${instance_name}.dtk.io":
@@ -23,8 +43,8 @@ define dtk_nginx::vhost_for_tenant(
         #proxy                 => "http://${dtk_tenant_name}",
         www_root              => $dtk_tenant_www_root,
         ssl		                => true,
-        ssl_cert              => "puppet:///modules/dtk_secret/dtk.io_combined.crt",
-        ssl_key               => "puppet:///modules/dtk_secret/wildcard.dtk.io.key",
+        ssl_cert              => "/etc/nginx/ssl/dtk.io.crt",
+        ssl_key               => "/etc/nginx/ssl/dtk.io.key",
         ssl_protocols         => "TLSv1 TLSv1.1 TLSv1.2",
         ssl_ciphers           => "ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK",
         ssl_cache             => "shared:SSL:50m",
