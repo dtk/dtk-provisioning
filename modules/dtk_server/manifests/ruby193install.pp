@@ -26,7 +26,13 @@ define dtk_server::ruby193install(
     # looks like 1.9.3 binaries are no longer available
     # or mybe not
     build_opts  => ['--binary'],
-  }
+  } 
+
+  rvm_gem {
+    "${ruby_version}@default/bundler":
+    ensure  => '1.12.5',
+    require => Rvm_system_ruby["${ruby_version}"];
+  }  
 }
 
 define dtk_server::rvm_wrapper($creates) {
