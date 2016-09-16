@@ -1,5 +1,11 @@
 ---
 component_modules:
+  ec2:
+    namespace: aws
+  image_aws:
+    namespace: aws
+  network_aws:
+    namespace: aws
   rvm:
     namespace: internal
   vcsrepo:

@@ -138,3 +138,6 @@ components:
 includes:
 - vcsrepo
 - rvm
+- image_aws
+- ec2
+- network_aws
