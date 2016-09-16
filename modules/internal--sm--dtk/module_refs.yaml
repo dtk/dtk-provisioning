@@ -3,7 +3,7 @@ component_modules:
   common_user:
     namespace: internal
   concat:
-    namespace: puppetlabs
+    namespace: internal
   docker:
     namespace: internal
   dtk:
