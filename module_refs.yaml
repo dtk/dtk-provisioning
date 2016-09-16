@@ -1,4 +1,4 @@
 ---
 component_modules:
   concat:
-    namespace: puppetlabs
+    namespace: internal
