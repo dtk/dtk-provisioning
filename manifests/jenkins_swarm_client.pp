@@ -11,7 +11,7 @@ class dtk_addons::jenkins_swarm_client(
   $location = "/home/${user}"
 
   exec { 'download_swarm_agent':
-    command => "wget http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/1.10/swarm-client-1.10-jar-with-dependencies.jar",
+    command => "wget https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.2/swarm-client-2.2-jar-with-dependencies.jar",
     user    => $user,
     cwd     => $location,
     path    => [ "/usr/local/bin/", "/bin/", "/usr/bin/"],
@@ -25,7 +25,7 @@ class dtk_addons::jenkins_swarm_client(
   }
 
   exec { 'run_swarm_agent':
-    command => "nohup java -jar ${location}/swarm-client-1.10-jar-with-dependencies.jar -fsroot ${fsroot} -master ${master} -mode ${mode} -name ${swarm_name} -username ${username} -password ${password} &",
+    command => "nohup java -jar ${location}/swarm-client-2.2-jar-with-dependencies.jar -fsroot ${fsroot} -master ${master} -mode ${mode} -name ${swarm_name} -username ${username} -password ${password} -disableClientsUniqueId &",
     user    => $user,
     path    => [ "/usr/local/bin/", "/bin/", "/usr/bin/"],
   }
