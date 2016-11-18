@@ -174,7 +174,7 @@ define dtk_server::tenant(
   }
 
   ### mcollective log file directory
-  dtk::directory_recursive_create { "/var/log/mcollective/${app_user} ${tenant_user}":
+  dtk_util::directory_recursive_create { "/var/log/mcollective/${app_user} ${tenant_user}":
     path    => "/var/log/mcollective/${app_user}",
     owner   => $app_user,
     require => User[$app_user]
