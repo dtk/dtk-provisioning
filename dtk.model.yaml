@@ -9,5 +9,5 @@ components:
         puppet_class: dtk_java
       dependencies: 
       - stdlib
-      - dtk
+      - dtk_util
 
