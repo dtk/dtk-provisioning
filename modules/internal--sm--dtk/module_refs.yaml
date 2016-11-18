@@ -6,8 +6,6 @@ component_modules:
     namespace: internal
   docker:
     namespace: internal
-  dtk:
-    namespace: internal
   dtk_activemq:
     namespace: internal
   dtk_addons:
@@ -31,6 +29,8 @@ component_modules:
   dtk_thin:
     namespace: internal
   dtk_user:
+    namespace: internal
+  dtk_util:
     namespace: internal
   ec2:
     namespace: aws

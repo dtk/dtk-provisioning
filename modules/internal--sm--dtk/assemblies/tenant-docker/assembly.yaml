@@ -8,7 +8,7 @@ assembly:
   nodes:
     tenant:
       components:
-      - dtk
+      - dtk_util
       - stdlib
       - vcsrepo::include
       - sysctl::include
@@ -38,7 +38,7 @@ workflow:
   - name: service_setup
     node: tenant
     ordered_components:
-    - dtk
+    - dtk_util
     - stdlib
     - vcsrepo::include
     - sysctl::include

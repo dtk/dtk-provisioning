@@ -37,7 +37,7 @@ assembly:
             log: /home/dtk16/server/current/application/log/production.log
             database: dtk16
             server_username: dtk16
-      - dtk
+      - dtk_util
       - dtk_server::ruby193install:
           attributes:
             install: 'true'
@@ -101,7 +101,7 @@ assembly:
             name: tenant
     repo_manager:
       components:
-      - dtk
+      - dtk_util
       - stdlib
       - dtk_repo_manager
       - dtk_postgresql::server
@@ -119,7 +119,7 @@ workflow:
     node: repo_manager
     ordered_components:
     - stdlib
-    - dtk
+    - dtk_util
     - dtk_postgresql::server
   - name: repo_man_setup
     node: repo_manager
@@ -131,7 +131,7 @@ workflow:
     node: tenant
     ordered_components:
     - stdlib
-    - dtk
+    - dtk_util
     - dtk_java
     - dtk_activemq
     - common_user[tenant]
