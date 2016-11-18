@@ -8,7 +8,7 @@ components:
     external_ref:
       puppet_class: dtk_postgresql::server
     dependencies:
-    - dtk
+    - dtk_util
     includes:
     - sysctl
     - apt
@@ -46,7 +46,7 @@ components:
         type: string
         required: true
     dependencies:
-    - dtk
+    - dtk_util
     after:
     - dtk_postgresql::server
 
