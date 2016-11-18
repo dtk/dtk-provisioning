@@ -8,7 +8,7 @@ components:
       external_ref: 
         puppet_class: dtk_activemq
       dependencies: 
-      - dtk
+      - dtk_util
       - dtk_java
       attributes: 
         user: 
