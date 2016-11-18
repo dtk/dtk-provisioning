@@ -30,7 +30,7 @@ define dtk_server::ruby193install(
 
   rvm_gem {
     "${ruby_version}@default/bundler":
-    ensure  => '1.12.5',
+    ensure  => '1.13.3',
     require => Rvm_system_ruby["${ruby_version}"];
   }  
 }

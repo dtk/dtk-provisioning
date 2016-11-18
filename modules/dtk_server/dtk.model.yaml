@@ -18,7 +18,7 @@ components:
         puppet_class: dtk_server::base
       dependencies:
       - gitolite
-      - dtk
+      - dtk_util
     ruby193install:
       description: "Install ruby 1.9.3 on tenant"
       external_ref:
