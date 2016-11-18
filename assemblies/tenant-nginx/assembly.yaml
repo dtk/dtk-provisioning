@@ -7,7 +7,7 @@ assembly:
   nodes:
     tenant:
       components:
-      - dtk
+      - dtk_util
       - dtk_server::add_user:
           attributes:
             tenant_db_user: dtk1
@@ -65,7 +65,7 @@ workflow:
     node: tenant
     ordered_components:
     - stdlib
-    - dtk
+    - dtk_util
     - dtk_java
     - dtk_activemq
     - common_user[dtk1]
