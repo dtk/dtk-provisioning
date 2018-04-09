@@ -2,7 +2,7 @@
 #include dtk_server::params
 
 define dtk_server::ruby193install(
-  $ruby_version = 'ruby-1.9.3-p484',
+  $ruby_version = 'ruby-2.2.9',
   $install)
 {
   class { 'rvm': 
